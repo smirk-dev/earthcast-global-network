@@ -32,8 +32,6 @@ const BroadcastNode = ({ location, onClick, isSelected }: BroadcastNodeProps) =>
   const y = earthRadius * Math.sin(lat);
   const z = earthRadius * Math.cos(lat) * Math.sin(lng);
 
-  
-
   useFrame((state) => {
     if (nodeRef.current) {
       // Gentle floating animation
@@ -59,7 +57,7 @@ const BroadcastNode = ({ location, onClick, isSelected }: BroadcastNodeProps) =>
           color={isSelected ? "#00FFFF" : (location.isLive ? "#FF4444" : "#888888")}
           emissive={isSelected ? "#00AAAA" : (location.isLive ? "#AA0000" : "#444444")}
           emissiveIntensity={0.5}
-          transparent
+          transparent={true}
           opacity={0.9}
         />
       </mesh>
@@ -70,7 +68,7 @@ const BroadcastNode = ({ location, onClick, isSelected }: BroadcastNodeProps) =>
           <sphereGeometry args={[0.12, 16, 16]} />
           <meshPhongMaterial
             color="#FF4444"
-            transparent
+            transparent={true}
             opacity={0.2}
             emissive="#FF4444"
             emissiveIntensity={0.3}
@@ -84,7 +82,7 @@ const BroadcastNode = ({ location, onClick, isSelected }: BroadcastNodeProps) =>
           <sphereGeometry args={[0.15, 16, 16]} />
           <meshPhongMaterial
             color="#00FFFF"
-            transparent
+            transparent={true}
             opacity={0.1}
             emissive="#00FFFF"
             emissiveIntensity={0.2}
@@ -95,7 +93,7 @@ const BroadcastNode = ({ location, onClick, isSelected }: BroadcastNodeProps) =>
       {/* HTML overlay for location name */}
       <Html
         position={[0, 0.15, 0]}
-        center
+        center={true}
         className="pointer-events-none"
         style={{
           transform: 'translate3d(-50%, -50%, 0)',
