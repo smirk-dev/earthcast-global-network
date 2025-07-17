@@ -2,7 +2,7 @@
 import { useRef } from 'react';
 import { Html, Sphere } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import { Group, Vector3 } from 'three';
+import { Group } from 'three';
 
 interface BroadcastNodeProps {
   location: {
@@ -32,7 +32,7 @@ const BroadcastNode = ({ location, onClick, isSelected }: BroadcastNodeProps) =>
   const y = earthRadius * Math.sin(lat);
   const z = earthRadius * Math.cos(lat) * Math.sin(lng);
 
-  const position = new Vector3(x, y, z);
+  
 
   useFrame((state) => {
     if (nodeRef.current) {
@@ -51,7 +51,7 @@ const BroadcastNode = ({ location, onClick, isSelected }: BroadcastNodeProps) =>
   });
 
   return (
-    <group ref={nodeRef} position={[x, y, z]} onClick={onClick}>
+    <group ref={nodeRef} position={[x, y, z]} onClick={(e) => { e.stopPropagation(); onClick(); }}>
       {/* Main broadcast node */}
       <Sphere args={[0.08, 16, 16]}>
         <meshPhongMaterial
