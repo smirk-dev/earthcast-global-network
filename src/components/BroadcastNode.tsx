@@ -1,6 +1,5 @@
 
 import { useRef } from 'react';
-import { Html } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { Group } from 'three';
 
@@ -48,8 +47,13 @@ const BroadcastNode = ({ location, onClick, isSelected }: BroadcastNodeProps) =>
     }
   });
 
+  const handleClick = (e: any) => {
+    e.stopPropagation();
+    onClick();
+  };
+
   return (
-    <group ref={nodeRef} position={[x, y, z]} onClick={(e) => { e.stopPropagation(); onClick(); }}>
+    <group ref={nodeRef} position={[x, y, z]} onClick={handleClick}>
       {/* Main broadcast node */}
       <mesh>
         <sphereGeometry args={[0.08, 16, 16]} />
@@ -57,8 +61,6 @@ const BroadcastNode = ({ location, onClick, isSelected }: BroadcastNodeProps) =>
           color={isSelected ? "#00FFFF" : (location.isLive ? "#FF4444" : "#888888")}
           emissive={isSelected ? "#00AAAA" : (location.isLive ? "#AA0000" : "#444444")}
           emissiveIntensity={0.5}
-          transparent={true}
-          opacity={0.9}
         />
       </mesh>
 
@@ -68,10 +70,10 @@ const BroadcastNode = ({ location, onClick, isSelected }: BroadcastNodeProps) =>
           <sphereGeometry args={[0.12, 16, 16]} />
           <meshPhongMaterial
             color="#FF4444"
-            transparent={true}
             opacity={0.2}
             emissive="#FF4444"
             emissiveIntensity={0.3}
+            transparent
           />
         </mesh>
       )}
@@ -82,33 +84,13 @@ const BroadcastNode = ({ location, onClick, isSelected }: BroadcastNodeProps) =>
           <sphereGeometry args={[0.15, 16, 16]} />
           <meshPhongMaterial
             color="#00FFFF"
-            transparent={true}
             opacity={0.1}
             emissive="#00FFFF"
             emissiveIntensity={0.2}
+            transparent
           />
         </mesh>
       )}
-
-      {/* HTML overlay for location name */}
-      <Html
-        position={[0, 0.15, 0]}
-        center={true}
-        className="pointer-events-none"
-        style={{
-          transform: 'translate3d(-50%, -50%, 0)',
-        }}
-      >
-        <div className="bg-black bg-opacity-60 backdrop-blur-sm text-white px-2 py-1 rounded text-xs whitespace-nowrap border border-cyan-400 border-opacity-50">
-          <div className="font-semibold">{location.name}</div>
-          {location.isLive && (
-            <div className="text-red-400 text-xs flex items-center">
-              <div className="w-2 h-2 bg-red-500 rounded-full mr-1 animate-pulse"></div>
-              LIVE
-            </div>
-          )}
-        </div>
-      </Html>
     </group>
   );
 };
