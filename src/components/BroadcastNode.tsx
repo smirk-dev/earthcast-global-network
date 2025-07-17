@@ -1,6 +1,6 @@
 
 import { useRef } from 'react';
-import { Html, Sphere } from '@react-three/drei';
+import { Html } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { Group } from 'three';
 
@@ -53,7 +53,8 @@ const BroadcastNode = ({ location, onClick, isSelected }: BroadcastNodeProps) =>
   return (
     <group ref={nodeRef} position={[x, y, z]} onClick={(e) => { e.stopPropagation(); onClick(); }}>
       {/* Main broadcast node */}
-      <Sphere args={[0.08, 16, 16]}>
+      <mesh>
+        <sphereGeometry args={[0.08, 16, 16]} />
         <meshPhongMaterial
           color={isSelected ? "#00FFFF" : (location.isLive ? "#FF4444" : "#888888")}
           emissive={isSelected ? "#00AAAA" : (location.isLive ? "#AA0000" : "#444444")}
@@ -61,11 +62,12 @@ const BroadcastNode = ({ location, onClick, isSelected }: BroadcastNodeProps) =>
           transparent
           opacity={0.9}
         />
-      </Sphere>
+      </mesh>
 
       {/* Pulsing ring for live broadcasts */}
       {location.isLive && (
-        <Sphere args={[0.12, 16, 16]}>
+        <mesh>
+          <sphereGeometry args={[0.12, 16, 16]} />
           <meshPhongMaterial
             color="#FF4444"
             transparent
@@ -73,12 +75,13 @@ const BroadcastNode = ({ location, onClick, isSelected }: BroadcastNodeProps) =>
             emissive="#FF4444"
             emissiveIntensity={0.3}
           />
-        </Sphere>
+        </mesh>
       )}
 
       {/* Selection glow */}
       {isSelected && (
-        <Sphere args={[0.15, 16, 16]}>
+        <mesh>
+          <sphereGeometry args={[0.15, 16, 16]} />
           <meshPhongMaterial
             color="#00FFFF"
             transparent
@@ -86,7 +89,7 @@ const BroadcastNode = ({ location, onClick, isSelected }: BroadcastNodeProps) =>
             emissive="#00FFFF"
             emissiveIntensity={0.2}
           />
-        </Sphere>
+        </mesh>
       )}
 
       {/* HTML overlay for location name */}
