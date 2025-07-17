@@ -1,6 +1,6 @@
 
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Stars, Text, Sphere, Html } from '@react-three/drei';
+import { OrbitControls, Stars } from '@react-three/drei';
 import { useRef, useState, useEffect } from 'react';
 import { Vector3, Group } from 'three';
 import { useFrame } from '@react-three/fiber';
@@ -19,7 +19,8 @@ const Earth = () => {
 
   return (
     <group ref={earthRef}>
-      <Sphere args={[2, 64, 64]}>
+      <mesh>
+        <sphereGeometry args={[2, 64, 64]} />
         <meshPhongMaterial
           color="#4169E1"
           transparent
@@ -27,10 +28,11 @@ const Earth = () => {
           emissive="#001122"
           emissiveIntensity={0.2}
         />
-      </Sphere>
+      </mesh>
       
       {/* Earth atmosphere glow */}
-      <Sphere args={[2.05, 32, 32]}>
+      <mesh>
+        <sphereGeometry args={[2.05, 32, 32]} />
         <meshPhongMaterial
           color="#87CEEB"
           transparent
@@ -38,16 +40,17 @@ const Earth = () => {
           emissive="#87CEEB"
           emissiveIntensity={0.3}
         />
-      </Sphere>
+      </mesh>
 
       {/* Continents - simplified representation */}
-      <Sphere args={[2.01, 32, 32]}>
+      <mesh>
+        <sphereGeometry args={[2.01, 32, 32]} />
         <meshPhongMaterial
           color="#228B22"
           transparent
           opacity={0.3}
         />
-      </Sphere>
+      </mesh>
     </group>
   );
 };
